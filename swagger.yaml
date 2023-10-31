@@ -197,14 +197,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RegisteredUser'
-        '400':
-          description: User not found
-          content:
-            application/json:
-              {
-                "error": "Missing password"
-              }
+                $ref: '#/components/schemas/Registered'
         'default':
           description: Some error
           content:
@@ -230,13 +223,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoggedIn'
-        '400':
-          description: User not found
-          content:
-            application/json:
-              {
-                "error": "Missing password"
-              }
         'default':
           description: Some error
           content:
