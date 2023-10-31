@@ -1,0 +1,493 @@
+openapi: 3.0.3
+info:
+  title: REQRES
+  version: 1.0.0
+  description: Fake data CRUD API
+servers:
+  - url: 'https://reqres.in/api'
+
+
+
+paths:
+  /users:
+    get:
+      summary: Get a users list
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: Page
+          schema:
+            type: string
+      tags:
+        - Users
+      operationId: getUsersList
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersList'
+        'default':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create user
+      tags:
+        - Simple User
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserData'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedUser'
+        'default':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/{id}:
+    get:
+      summary: Get user by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User id
+          schema:
+            type: integer
+            example: 2
+      tags:
+        - Users
+      operationId: getUserById
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+          content:
+            application/json: {}
+        'default':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update user by id
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: User id
+          schema:
+            type: integer
+            example: 2
+      tags:
+        - Simple User
+      operationId: updateUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserData'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatedUser'
+        'default':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: Update user by id
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: User id
+          schema:
+            type: integer
+            example: 2
+      tags:
+        - Simple User
+      operationId: updateUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserData'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatedUser'
+        'default':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Delete user by id
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: User id
+          schema:
+            type: integer
+            example: 2
+      tags:
+        - Simple User
+      operationId: deleteUser
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json: {}
+        'default':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+    
+  /register:
+    post:
+      summary: Register user
+      tags:
+        - Authentification
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUser'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisteredUser'
+        '400':
+          description: User not found
+          content:
+            application/json:
+              {
+                "error": "Missing password"
+              }
+        'default':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /login:
+    post:
+      summary: Login user
+      tags:
+        - Authentification
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUser'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoggedIn'
+        '400':
+          description: User not found
+          content:
+            application/json:
+              {
+                "error": "Missing password"
+              }
+        'default':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /unknown:
+    get:
+      summary: Get a resources list
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: Page
+          schema:
+            type: string
+      tags:
+        - Resources
+      operationId: getResourcesList
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnknownResourcesList'
+        'default':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /unknown/{id}:
+    get:
+      summary: Get resource by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Resource id
+          schema:
+            type: integer
+            example: 2
+      tags:
+        - Resources
+      operationId: getResourceById
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnknownResource'
+        '404':
+          description: User not found
+          content:
+            application/json: {}
+        'default':
+          description: Some error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+                
+                
+                
+components:
+  schemas:    
+    User:
+      type: object
+      required:
+        - id 
+        - email
+        - first_name
+        - last_name
+        - avatar
+      properties:
+        id:
+          type: integer
+          example: 2
+        email:
+          type: string
+          example: 'janet.weaver@reqres.in'
+        first_name:
+          type: string
+          example: 'Janet'
+        last_name:
+          type: string
+          example: 'Weaver'
+        avatar:
+          type: string
+          example: 'https://reqres.in/img/faces/2-image.jpg'
+    UsersList:
+      type: object
+      required:
+        - page 
+        - per_page
+        - total
+        - total_pages
+        - data
+      properties:
+        page:
+          type: integer
+          example: 2
+        per_page:
+          type: integer
+          example: 6
+        total:
+          type: integer
+          example: 12
+        total_pages:
+          type: integer
+          example: 2
+        data:
+          type: array  
+          items:
+            $ref: "#/components/schemas/User"
+    UnknownResource:
+      type: object
+      required:
+        - id 
+        - name
+        - year
+        - color
+        - pantone_value
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: 'fuchsia rose'
+        year:
+          type: integer
+          example: 2001
+        color:
+          type: string
+          example: '#C74375'
+        pantone_value:
+          type: string
+          example: '17-2031'
+    UnknownResourcesList:
+      type: object
+      required:
+        - page 
+        - per_page
+        - total
+        - total_pages
+        - data
+      properties:
+        page:
+          type: integer
+          example: 2
+        per_page:
+          type: integer
+          example: 6
+        total:
+          type: integer
+          example: 12
+        total_pages:
+          type: integer
+          example: 2
+        data:
+          type: array  
+          items:
+            $ref: "#/components/schemas/UnknownResource"
+    UserData:
+        type: object
+        required:
+          - name
+          - job
+        properties:
+          name:
+            type: string
+            example: 'morpheus'
+          job:
+            type: string
+            example: 'leader'
+    CreatedUser:
+        type: object
+        required:
+          - name
+          - job
+          - id
+          - createdAt
+        properties:
+          name:
+            type: string
+            example: 'morpheus'
+          job:
+            type: string
+            example: 'leader'
+          id:
+            type: string
+            example: '963'
+          createdAt:
+            type: string
+            format: date
+    UpdatedUser:
+        type: object
+        required:
+          - name
+          - job
+          - updatedAt
+        properties:
+          name:
+            type: string
+            example: 'morpheus'
+          job:
+            type: string
+            example: 'leader'
+          updatedAt:
+            type: string
+            format: date
+    AuthUser:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            type: string
+            example: 'eve.holt@reqres.in'
+          password:
+            type: string
+            example: 'pistol'
+    Registered:
+        type: object
+        required:
+          - id
+          - token
+        properties:
+          id:
+            type: string
+            example: '4'
+          token:
+            type: string
+            example: 'QpwL5tke4Pnpja7X4'
+    LoggedIn:
+        type: object
+        required:
+          - token
+        properties:
+          token:
+            type: string
+            example: 'QpwL5tke4Pnpja7X4'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
